@@ -5,13 +5,10 @@ defaultContentLanguage = "ja"
 languageCode = "ja-jp"
 enableRobotsTXT = true
 
-# ✅ Hugo 0.128+：paginate → pagination.pagerSize
 [pagination]
   pagerSize = 10
 
 [params]
-[params.assets]
-  customCSS = ["css/custom.css"]
   env = "production"
   description = "事業開発・ブロックチェーン・実装メモ"
   defaultTheme = "auto"
@@ -21,18 +18,20 @@ enableRobotsTXT = true
   TocOpen = true
   DateFormat = "2006-01-02"
 
+[params.assets]
+  customCSS = ["css/custom.css"]
+
 [menu]
   [[menu.main]]
     name = "メイン"
-    url = "/"
+    url  = "https://miraiaxis.com/"  # ← フルURLに
     weight = 1
   [[menu.main]]
     name = "ブログ"
-    url = "/blog/"
+    url  = "/"                        # ← relURLで /blog/ に正規化される
     weight = 2
+
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
-[params.assets]
-  customCSS = ["css/custom.css"]
