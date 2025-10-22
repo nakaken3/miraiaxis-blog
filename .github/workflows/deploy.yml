@@ -2,7 +2,7 @@ name: Deploy blog to Xserver (FTPS)
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   workflow_dispatch: {}
 
 jobs:
@@ -11,22 +11,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: true          # PaperMod 取り込み
 
       - uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "latest"
+          hugo-version: 'latest'
           extended: true
 
-      - run: hugo --minify
+      - name: Build site
+        run: hugo --minify
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          server: ${{ secrets.FTP_HOST }} # sv7487.xserver.jp
-          username: ${{ secrets.FTP_USER }} # ftp@mirainozaki.xsrv.jp
-          password: ${{ secrets.FTP_PASSWORD }} # パスワード
+          server: ${{ secrets.FTP_HOST }}               # 例: sv7487.xserver.jp
+          username: ${{ secrets.FTP_USER }}             # 例: ftp@mirainozaki.xsrv.jp
+          password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          local-dir: ./public/
-          server-dir: miraiaxis.com/public_html/blog/
+          local-dir: ./public/                          # Hugo 出力先
+          server-dir: miraiaxis.com/public_html/blog/   # lftp で確認した相対パス
+          # ↓ 安定化オプション（Xserver で効きやすい）
+          passive: true
+          timeout: 600
+          log-level: verbose
+          git-ftp-args: "--insecure"                    # 稀に必要（TLS 周りでこける場合）
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.DS_Store
