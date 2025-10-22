@@ -31,5 +31,5 @@ jobs:
           port: ${{ secrets.SFTP_PORT }}
           ssh_private_key: ${{ secrets.SFTP_PRIVATE_KEY }}
           local_path: "./public/*"
-          remote_path: "/home/<XSERVER-ACCOUNT>/public_html/blog"
+          remote_path: “miraiaxis.com/public_html/blog"
           sftp_only: true
