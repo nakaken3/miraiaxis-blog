@@ -1,35 +1,32 @@
-name: Deploy blog to Xserver (SFTP)
+name: Deploy blog to Xserver (FTPS)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch: {}
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          submodules: true  # PaperMod の取り込み
+          submodules: true
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+      - uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
+          hugo-version: "latest"
           extended: true
 
-      - name: Build
-        run: hugo --minify
+      - run: hugo --minify
 
-      - name: Deploy via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          username: ${{ secrets.SFTP_USER }}
-          server: ${{ secrets.SFTP_HOST }}
-          port: ${{ secrets.SFTP_PORT }}
-          ssh_private_key: ${{ secrets.SFTP_PRIVATE_KEY }}
-          local_path: "./public/*"
-          remote_path: “miraiaxis.com/public_html/blog"
-          sftp_only: true
+          server: ${{ secrets.FTP_HOST }} # sv7487.xserver.jp
+          username: ${{ secrets.FTP_USER }} # ftp@mirainozaki.xsrv.jp
+          password: ${{ secrets.FTP_PASSWORD }} # パスワード
+          protocol: ftps
+          port: 21
+          local-dir: ./public/
+          server-dir: miraiaxis.com/public_html/blog/
