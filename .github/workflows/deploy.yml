@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true          # PaperMod 取り込み
+          submodules: true
 
       - uses: peaceiris/actions-hugo@v3
         with:
@@ -22,21 +22,15 @@ jobs:
         run: hugo --minify
 
       - name: Deploy via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST }}               # 例: sv7487.xserver.jp
-          username: ${{ secrets.FTP_USER }}             # 例: ftp@mirainozaki.xsrv.jp
+          server: ${{ secrets.FTP_HOST }}            # 例: sv7487.xserver.jp
+          username: ${{ secrets.FTP_USER }}          # 例: ftp@mirainozaki.xsrv.jp
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          local-dir: ./public/                          # Hugo 出力先
-          server-dir: miraiaxis.com/public_html/blog/   # lftp で確認した相対パス
-          # ↓ 安定化オプション（Xserver で効きやすい）
-          passive: true
-          timeout: 600
-          log-level: verbose
-          git-ftp-args: "--insecure"                    # 稀に必要（TLS 周りでこける場合）
+          local-dir: ./public/
+          server-dir: miraiaxis.com/public_html/blog/
           exclude: |
             **/.git*
-            **/.git*/**
             **/.DS_Store
