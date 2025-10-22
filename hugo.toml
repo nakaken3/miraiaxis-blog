@@ -17,21 +17,19 @@ enableRobotsTXT = true
   ShowToc = true
   TocOpen = true
   DateFormat = "2006-01-02"
-
-[params.assets]
-  customCSS = ["css/custom.css"]
+  # PaperModのカスタムCSS読込
+  [params.assets]
+    customCSS = ["css/custom.css"]
 
 [menu]
   [[menu.main]]
     name = "メイン"
-    url  = "https://miraiaxis.com/"  # ← フルURLに
+    url  = "https://miraiaxis.com/"   # フルURL
     weight = 1
   [[menu.main]]
     name = "ブログ"
-    url  = "/"                        # ← relURLで /blog/ に正規化される
+    url  = "/"                        # /blog/ に正規化される
     weight = 2
-
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
-
