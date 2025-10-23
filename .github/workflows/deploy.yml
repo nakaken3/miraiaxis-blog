@@ -30,8 +30,8 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: ./public/
-          server-dir: blog/ # ← 直下が public_html の場合
-          dangerous-clean-slate: true
+          server-dir: blog/ # ★ ここを blog/ に
+          dangerous-clean-slate: true # ★ リモート/blog をクリーン同期
           log-level: standard
           timeout: 600000
           exclude: |
