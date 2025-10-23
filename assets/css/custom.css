@@ -1,11 +1,11 @@
-/* ===== 共通トップバー（画面最上部に固定） ===== */
+/* ==== 固定トップバー ==== */
 .site-topbar {
-  position: fixed; /* ← 固定に変更：必ず最上部に出る */
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: 10000;
-  background: #ffffff;
+  background: #fff;
   border-bottom: 1px solid #eaeaea;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
@@ -14,13 +14,13 @@
   margin: 0 auto;
   padding: 10px 16px;
   display: flex;
-  align-items: center;
   gap: 18px;
+  align-items: center;
 }
 .site-topbar .brand {
   font-weight: 700;
   letter-spacing: 0.2px;
-  color: #111;
+  color: #0f172a;
 }
 .site-topbar .badge {
   display: inline-block;
@@ -28,7 +28,7 @@
   margin-left: 6px;
   padding: 1px 8px;
   border-radius: 999px;
-  background: #eef2ff; /* 薄いアクセント */
+  background: #eef2ff;
   color: #3730a3;
 }
 .site-topbar .nav-tabs {
@@ -37,29 +37,27 @@
   flex-wrap: wrap;
 }
 .site-topbar .nav-tabs a {
+  color: #0f172a;
   text-decoration: none;
-  color: #111;
   padding: 4px 2px;
   border-radius: 6px;
 }
-.site-topbar .nav-tabs a:hover,
-.site-topbar .nav-tabs a[aria-current="page"] {
+.site-topbar .nav-tabs a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-/* ===== 本文の読みやすさ強化 ===== */
+/* ==== 本文の読みやすさ ==== */
 :root {
-  --accent: #2563eb; /* ブルー系アクセント */
+  --accent: #2563eb;
   --text: #0f172a;
   --muted: #475569;
 }
 .main {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 24px 18px;
+  padding: 28px 18px;
 }
-.post-title,
 h1,
 h2,
 h3 {
@@ -67,8 +65,8 @@ h3 {
   line-height: 1.35;
 }
 h1 {
-  font-size: 2.1rem;
-  margin-top: 1.2rem;
+  font-size: 2.25rem;
+  margin-top: 1.25rem;
 }
 h2 {
   font-size: 1.6rem;
@@ -77,25 +75,21 @@ h2 {
 p,
 li {
   color: var(--muted);
-  font-size: 1.02rem;
+  font-size: 1.03rem;
   line-height: 1.9;
 }
 a {
   color: var(--accent);
 }
 a:hover {
-  opacity: 0.85;
+  opacity: 0.9;
 }
-
-/* 目次（PaperMod）を少し読みやすく */
 .toc {
   background: #fafafa;
   border: 1px solid #eee;
   border-radius: 12px;
   padding: 12px;
 }
-
-/* コードやタグ */
 code {
   background: #f6f8fa;
   padding: 0.15em 0.35em;
@@ -108,7 +102,36 @@ code {
   border-radius: 999px;
 }
 
-/* 固定ヘッダー分だけ本文を下げる（重なり防止） */
+/* 固定ヘッダー重なり防止 */
 body {
   padding-top: 56px;
+}
+
+html {
+  outline: 3px dashed rgba(0, 0, 0, 0.1);
+}
+
+/* 明るいテーマ */
+:root {
+  --theme: #f7f7fb;
+  --entry: #ffffff;
+  --primary: #1f4b8f; /* 見出し・リンク基調色 */
+  --secondary: #6b7280; /* 補助テキスト */
+  --tertiary: #9ca3af; /* さらに薄い補助 */
+  --content: #1f2937; /* 本文色 */
+  --border: #e5e7eb;
+  --code-bg: #f5f7fa;
+}
+
+/* 余白と読みやすさ（必要に応じて） */
+.post-content p,
+.post-content li {
+  line-height: 1.9;
+}
+
+.main {
+  padding-top: 1.25rem;
+}
+.post-header {
+  margin-bottom: 1.25rem;
 }

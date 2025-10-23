@@ -1,0 +1,7 @@
+{{- $style := resources.Get "css/override.css" | resources.Minify |
+resources.Fingerprint -}}
+<link
+  rel="stylesheet"
+  href="{{ $style.RelPermalink }}"
+  integrity="{{ $style.Data.Integrity }}"
+/>

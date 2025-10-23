@@ -1,0 +1,17 @@
+/* EXTENDED_OVERRIDE */
+html {
+  outline: 6px dashed rgba(0, 128, 255, 0.45) !important;
+} /* ←見えるテスト。後で削除 */
+
+:root {
+  --theme: #f9fafb;
+  --entry: #ffffff;
+  --primary: #1f4b8f;
+  --secondary: #6b7280;
+  --content: #1f2937;
+  --border: #e5e7eb;
+}
+.post-content p,
+.post-content li {
+  line-height: 1.9;
+}

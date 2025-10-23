@@ -17,9 +17,6 @@ enableRobotsTXT = true
   ShowToc = true
   TocOpen = true
   DateFormat = "2006-01-02"
-  # PaperModのカスタムCSS読込
-  [params.assets]
-    customCSS = ["css/custom.css"]
 
 [menu]
   [[menu.main]]

@@ -1,0 +1,74 @@
+/* ===== Reader（記事ページだけ素の見た目）===== */
+/* PaperMod の記事ページは .post-single が付く */
+.post-single {
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+/* 本文：標準的な読みやすいサイズ＆行間 */
+.post-single .post-content {
+  max-width: 720px; /* 好みで */
+  font: 16px/1.8 ui-serif, Georgia, "Times New Roman", serif;
+  color: #000;
+  margin: 0;
+}
+
+/* 見出し（素に近い余白） */
+.post-single .post-content h1,
+.post-single .post-content h2,
+.post-single .post-content h3,
+.post-single .post-content h4 {
+  font-weight: 700;
+  margin: 1.6em 0 0.6em;
+}
+
+/* リンク：青＋下線、訪問済みは紫（素の雰囲気） */
+.post-single .post-content a {
+  color: #00e;
+  text-decoration: underline;
+}
+.post-single .post-content a:visited {
+  color: #551a8b;
+}
+
+/* 箇条書きの余白を素っぽく */
+.post-single .post-content ul,
+.post-single .post-content ol {
+  padding-left: 1.4em;
+  margin: 0.8em 0;
+}
+
+/* 区切り線 */
+.post-single .post-content hr {
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1.6em 0;
+}
+
+/* 引用・コードは最小限の装飾 */
+.post-single .post-content blockquote {
+  margin: 1em 0;
+  padding: 0 1em;
+  color: #333;
+  border-left: 4px solid #ddd;
+}
+.post-single .post-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: #f6f8fa;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+.post-single .post-content pre code {
+  display: block;
+  padding: 1em;
+  overflow: auto;
+}
+
+/* 記事ヘッダ周りの装飾を最小化（タイトル・メタだけに） */
+.post-single .post-header,
+.post-single .post-meta {
+  box-shadow: none !important;
+  background: transparent !important;
+}
