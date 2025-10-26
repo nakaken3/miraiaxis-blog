@@ -9,14 +9,6 @@ enableRobotsTXT = true
   pagerSize = 10
 
 [params]
-  env = "production"
-  description = "事業開発・ブロックチェーン・実装メモ"
-  defaultTheme = "auto"
-  ShowReadingTime = true
-  ShowPostNavLinks = true
-  ShowToc = true
-  TocOpen = true
-  DateFormat = "2006-01-02"
   mainSections = ["posts"]
 
 [menu]
