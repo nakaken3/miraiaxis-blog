@@ -21,19 +21,37 @@ jobs:
       - name: Build site
         run: hugo --gc --minify
 
-      - name: Deploy via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_HOST }} # sv7487.xserver.jp
-          username: ${{ secrets.FTP_USER }} # ftp@mirainozaki.xsrv.jp
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./public/
-          server-dir: blog/ # ★ ここを blog/ に
-          dangerous-clean-slate: true # ★ リモート/blog をクリーン同期
-          log-level: standard
-          timeout: 600000
-          exclude: |
-            **/.git*
-            **/.DS_Store
+      # 先に疎通テスト（原因切り分け）
+      - name: Debug connectivity to Xserver FTPS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dnsutils netcat-openbsd openssl
+          echo "=== DNS ===";  dig +short sv7487.xserver.jp || true
+          echo "=== TCP connect to :21 ===";  nc -vz -w 10 sv7487.xserver.jp 21 || true
+          echo "=== TLS handshake (Explicit FTPS) ==="
+          openssl s_client -starttls ftp -connect sv7487.xserver.jp:21 -tls1_2 -brief || true
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Deploy via FTPS (lftp)
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }} # 例: sv7487.xserver.jp
+          FTP_USER: ${{ secrets.FTP_USER }} # 例: ftp@mirainozaki.xsrv.jp
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }} # Secrets 名を必ず一致させる
+        run: |
+          lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_HOST" <<'EOF'
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ftp:passive-mode true
+          set net:max-retries 2
+          set net:timeout 30
+          cd blog        # ← Aパターン（ログイン直後が public_html）
+          pwd; ls -la
+          lcd public     # ローカルの public/ を基準に
+          mirror -R --delete --verbose . .
+          ls -la
+          bye
+          EOF
