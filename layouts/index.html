@@ -1,0 +1,19 @@
+{{/* /blog/ のホームを強制的に「posts の一覧」にする。PaperMod の baseof を使う */}}
+{{ define "main" }}
+<section class="list">
+  {{ $pages := where .Site.RegularPages "Section" "posts" }}
+  {{ $pages = sort $pages "Date" "desc" }}
+  {{ range $pages }}
+  <article class="post-entry" style="margin:10px 0;">
+    <header class="entry-header">
+      <h2 style="margin:0;font-size:1.1rem;">
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </h2>
+    </header>
+    <footer class="entry-footer" style="font-size:.9rem;opacity:.7;">
+      {{ .Date.Format "2006-01-02" }}
+    </footer>
+  </article>
+  {{ end }}
+</section>
+{{ end }}
