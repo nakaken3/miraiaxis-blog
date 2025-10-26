@@ -40,7 +40,7 @@ jobs:
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }} # 例: sv7487.xserver.jp
           FTP_USER: ${{ secrets.FTP_USER }} # 例: ftp@mirainozaki.xsrv.jp
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }} # Secrets 名を必ず一致させる
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
           lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_HOST" <<'EOF'
           set ftp:ssl-force true
@@ -48,9 +48,10 @@ jobs:
           set ftp:passive-mode true
           set net:max-retries 2
           set net:timeout 30
-          cd blog        # ← Aパターン（ログイン直後が public_html）
-          pwd; ls -la
-          lcd public     # ローカルの public/ を基準に
+          cd blog
+          pwd
+          ls -la
+          lcd public
           mirror -R --delete --verbose . .
           ls -la
           bye
