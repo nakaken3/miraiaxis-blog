@@ -1,0 +1,17 @@
+{{- /* /blog/index.json を生成するテンプレート（上書き） */ -}}
+{{- $sections := site.Params.mainSections | default (slice "posts") -}}
+{{- $pages := where site.RegularPages "Section" "in" $sections -}}
+{{- $pages = sort $pages "Date" "desc" -}}
+
+[
+{{- $first := true -}}
+{{- range $pages -}}
+  {{- if not $first }},{{ end -}}
+  {{- $first = false -}}
+  {
+    "title": {{ .Title | jsonify }},
+    "url":   {{ .RelPermalink | jsonify }},
+    "date":  {{ .Date | time.Format "2006-01-02T15:04:05Z07:00" | jsonify }}
+  }
+{{- end -}}
+]
