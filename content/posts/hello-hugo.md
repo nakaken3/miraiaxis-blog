@@ -1,7 +1,7 @@
 ---
 title: "ブログをHugoで始めました"
 date: 2025-10-23
-draft: true
+draft: false
 summary: "Hugo + PaperModで運用開始。右カラムに最新記事も表示。"
 tags: ["お知らせ", "Hugo"]
 cover:
