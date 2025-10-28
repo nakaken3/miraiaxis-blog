@@ -1,0 +1,295 @@
+ブログ運用方法
+
+
+# 0) （初回だけ：雛形を用意してあるならスキップOK）
+#    archetypes/posts/index.md を作ってある前提で進めます
+
+# 1) 記事フォルダを作成（bundle）
+hugo new posts/post-1/index.md
+
+# 2) VS Codeで本文を書く（画像は同じフォルダに入れ、相対パスで参照）
+#    content/posts/post-1/index.md を編集
+#    公開時は front matter を draft:false ＆ 過去日時に
+# ---
+# title: "タイトル"
+# date: 2025-10-24T10:00:00+09:00
+# draft: false
+# ---
+
+# 3) （任意）ローカルで下書き表示
+hugo server -D
+
+# 4) GitHubへpush（Actionsが自動ビルド&デプロイ）
+git add content/posts/post-1         # ← フォルダごと追加
+git commit -m "publish: post-1"
+git push
+——————————————————————cssだけ追加
+git add assets/css/extended/custom.css
+git rm assets/css/cumtom.css        # ← ファイルを削除した場合
+git commit -m "Fix: use extended/custom.css and remove typo cumtom.css"
+git push origin <ブランチ名>         # 例: main
+——————————————————————
+日々のコマンドまとめ
+追加（新規公開）
+
+# 作成
+hugo new posts/<slug>/index.md
+
+# VS Codeで編集 → 公開時に draft:false ＆ date を“過去”に
+git add content/posts/<slug>
+git commit -m "publish: <slug>"
+git push
+更新（本文・タイトル・画像の変更）
+
+# index.md や画像を編集後
+git add content/posts/<slug>          # フォルダごと add が楽
+# 例: git add content/posts/first-test
+git commit -m "update: <slug> (本文/画像/日付など更新)"
+git push
+削除
+
+git rm -r content/posts/<slug>
+git commit -m "remove: <slug>"
+git push
+※ どの操作でも push 後は GitHub Actions が自動ビルド＆FTPSデプロイします。ブラウザは ?nocache=1 を付けて確認すると反映が早く見えます。
+
+——————————————————————
+5) よく使う運用コマンド
+* 下書き一覧：hugo list drafts
+* 未来日付一覧：hugo list future
+* 公開前チェック（本番条件で生成確認）：hugo --gc --minify && open public/index.html
+* 削除（フォルダ形式）：git rm -r content/posts/my-first-post && git commit -m "remove: ..." && git push
+    * 単一ファイル形式だった旧記事は git rm content/posts/slug.md でOK
+
+6) トラブル時のチェック
+* /blog/ が真っ白：
+    * 記事が全部 draft:true / 未来日付 → draft:false と 過去日付に修正
+    * それでも白い → いまは layouts/index.html を上書きして一覧強制表示にしてあるので、基本解決済み
+* 右カラム「最新ブログ」が空：
+    * /blog/index.json をブラウザで開く（配列が返っていればOK）
+* localhost に飛ぶリンクが出た：
+    * ビルドは必ず --baseURL "https://miraiaxis.com/blog/" で
+    * 古いHTMLが残っていたら再デプロイ or 当該記事だけ再アップ
+————————————————
+
+hugo new posts/post-1/index.md
+
+content/
+└─ posts/
+   ├─ post-1/index.md
+   ├─ post-2/index.md
+   └─ post-3/index.md
+
+
+よくある操作（増えてきたとき）
+公開フロー
+1. ローカルプレビュー：hugo server -D
+2. OKなら index.md の draft: false と過去時刻に調整
+3. ビルド：hugo --gc --minify
+4. 反映：git add content/posts/post-1 && git commit -m "publish: post-1" && git push
+画像の追加
+
+content/posts/post-2/diagram.png
+→ 本文：![図](diagram.png)
+記事の削除（bundle丸ごと）
+
+git rm -r content/posts/post-2
+git commit -m "remove: post-2"
+git push
+---------------------*****************************************
+画像の追加（ベストプラクティス）
+1. 画像ファイルを記事フォルダの中へ入れる
+
+content/posts/first-test/
+├─ index.md         ← 本文
+├─ hero.jpg         ← アイキャッチなど
+└─ chart.png        ← 図表など
+1. 本文から相対パスで参照
+
+![](hero.jpg)                         <!-- 画像だけ -->
+![処理フローの図](chart.png)          <!-- アクセシビリティ用の代替テキスト -->
+1. キャプションやサイズを出したいとき（HTMLでOK）
+
+<figure>
+  <img src="chart.png" alt="処理フローの図" width="720">
+  <figcaption>処理フローの概略図</figcaption>
+</figure>
+1. 画像のコツ
+* ファイル名：半角英数字＋ハイフン（例：user-flow-01.png）
+* 形式：写真→jpg / 図表・UI→png / 可能なら webp も併用
+* サイズ：横 1200px 程度まで。原寸が大きい場合は事前に圧縮（TinyPNG等）
+* 代替テキスト（alt や ![…]）：短く内容が伝わる文に
+1. 添付ファイル（PDF 等）
+
+content/posts/first-test/proposal.pdf
+本文：
+
+[企画書（PDF）をダウンロード](proposal.pdf)
+ブログ本文の書き方（最小〜実用）
+新規作成〜下書き
+
+hugo new posts/first-test/index.md
+# → content/posts/first-test/index.md が自動生成
+ひな形（例）
+
+---
+title: "はじめての投稿"
+date: 2025-10-27T10:00:00+09:00  # 公開時は“過去”の日時に
+draft: true                       # 下書き中は true / 公開時に false
+tags: ["お知らせ"]
+summary: "この記事の要約。トップやSNSで使われます。"
+---
+
+導入文（リード）。
+ここに1〜2文で要点を書きます。
+
+<!--more-->
+
+## 見出し
+本文を Markdown で書きます。**強調**、*斜体*、`コード` もOK。
+
+- 箇条書き
+- 表現をそろえる
+- 長い文は段落で分ける
+
+画像：
+![処理フローの図](chart.png)
+
+コードブロック：
+```bash
+hugo --gc --minify
+リンク：
+* 社のトップページ（内部リンク）
+* 外部サイト
+
+> `<!--more-->` より上が一覧の抜粋になります。
+
+## ローカルプレビュー
+```bash
+hugo server -D
+# http://localhost:1313/blog/ （-D で draft も表示）
+公開
+index.md のフロントマターを draft: false に、date: を過去時刻にしてから：
+
+git add content/posts/first-test
+git commit -m "publish: first-test"
+git push
+（GitHub Actions が自動でビルド＆デプロイ。?nocache=1 で反映確認が早いです）
+更新
+
+# index.md や画像を編集後
+git add content/posts/first-test
+git commit -m "update: first-test（本文/画像など）"
+git push
+削除
+
+git rm -r content/posts/first-test
+git commit -m "remove: first-test"
+git push
+よくある質問
+* 記事の並び順は？date: の降順（新しい順）。順番を変えたい時は date を調整。未来日付や draft:true は本番では非表示。
+* URL（スラッグ）を変えたいフォルダ名を変えるとURLも変わります。旧URLから転送したい場合は front matter に：aliases: ["/posts/old-slug/"]
+* 
+* うまく反映されない
+    * ブラウザで ?nocache=1 を付けて再読み込み
+    * GitHub Actions が成功しているか確認
+    * それでも古い表示が残る時は、手動で /blog/ をクリーン→public/ を再アップ（先ほどの lftp 手順）
+***************************************
+ブログの反映が遅い時の処置
+1) ローカルで first-test が出力されているか確認
+
+hugo --gc --minify --cleanDestinationDir --baseURL "https://miraiaxis.com/blog/"
+
+# 記事URLが入っているか（ヒットすればOK）
+grep -o '"/blog/posts/first-test/"' public/index.json
+
+# 単体ページの先頭を確認
+head -n 20 public/posts/first-test/index.html
+→ ここで OK なら「ビルド物は正しい」＝サーバ反映 or キャッシュの問題に絞れます。
+
+2) サーバ側にファイルがあるか直接見る（読み取りだけ）
+
+read -s -p "FTP password: " FTP_PASS; echo
+lftp -u 'ftp@mirainozaki.xsrv.jp',"$FTP_PASS" sv7487.xserver.jp -e "\
+set ftp:ssl-force true; set ftp:ssl-protect-data true; set ftp:passive-mode true; \
+cd miraiaxis.com/public_html/blog; \
+echo '=== PWD / LIST ==='; pwd; ls -la; \
+echo '=== posts/first-test/ ==='; ls -la posts/first-test; \
+echo '=== index.json(head) ==='; cat index.json | head -c 300; echo; \
+echo '=== first-test(index.html head) ==='; cat posts/first-test/index.html | head -n 20; \
+bye"
+* posts/first-test/ が無い → 未アップ
+* index.json に /blog/posts/first-test/ が無い → トップJSON未更新
+* 両方あるのに表示されない → ブラウザ/中継キャッシュの可能性が高い（?nocache=1 で回避）
+
+3) 手動で“公正な一式”を再配置（安全版）
+Actions が成功でも反映にズレがある時は、一度ローカルの public/ をそのまま上げ直すと即解決します。
+
+# 2) と同じ要領でパスワード入力
+read -s -p "FTP password: " FTP_PASS; echo
+lftp -u 'ftp@mirainozaki.xsrv.jp',"$FTP_PASS" sv7487.xserver.jp -e "\
+set ftp:ssl-force true; set ftp:ssl-protect-data true; set ftp:passive-mode true; \
+cd miraiaxis.com/public_html/blog; \
+lcd public; \
+mirror -R --delete --verbose . .; \
+ls -la; \
+bye"
+
+4) 表示確認（キャッシュ無視）
+* 一覧：https://miraiaxis.com/blog/?nocache=901
+* 記事：https://miraiaxis.com/blog/posts/first-test/?nocache=901
+* JSON：https://miraiaxis.com/blog/index.json?nocache=901 に /blog/posts/first-test/ が含まれている
+
+5) もしまだダメなら見るポイント（速チェック）
+* content/posts/first-test/index.md の front matter がdraft: false ＆ date: が 過去時刻（未来だと本番で非表示）
+* Actions の Build step がhugo --gc --minify --baseURL "https://miraiaxis.com/blog/" になっている
+* Actions の FTPSログにlcd public → mirror -R --delete → Uploading posts/first-test/index.htmlの行が出ている（server-dir が .../public_html/blog/ で合っている）
+
+これで「どこで止まっているか」が必ず分かります。上の lftp 出力で
+* posts/first-test/ が無い
+* index.json に出ていない
+* どちらもある
+
+——————————
+3) FTPS のリトライ＆タイムアウトを明示
+Xserver 側でたまに LIST/接続がもたつくので、lftp に再接続パラメータを付けておきます。
+
+- name: Deploy via FTPS (lftp)
+  env:
+    FTP_HOST: ${{ secrets.FTP_HOST }}
+    FTP_USER: ${{ secrets.FTP_USER }}
+    FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+  run: |
+    lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_HOST" <<'EOF'
+    set ftp:ssl-force true
+    set ftp:ssl-protect-data true
+    set ftp:passive-mode true
+    set net:timeout 30
+    set net:max-retries 3
+    set net:reconnect-interval-base 5
+    set net:reconnect-interval-multiplier 1.5
+    set xfer:clobber on
+    cd miraiaxis.com/public_html/blog
+    lcd public
+    mirror -R --delete --verbose --parallel=2 --exclude-glob .DS_Store .
+    ls -la
+    bye
+    EOF
+--parallel=2 くらいが安定。多すぎると逆に失敗率が上がります。
+
+運用ミニチェックリスト（再掲・保存版）
+* 公開前に index.md のdraft: false / date: （過去時刻）
+* ローカル試験：hugo server -D
+* push 後の確認：
+    * 一覧：/blog/?nocache=1
+    * JSON：/blog/index.json?nocache=1
+* もし白い：ブラウザキャッシュ or サーバ残骸。→ Actions 成功を確認 → それでもダメなら 手動再配置（今回の lftp コマンド）。
+
+さらに堅牢にしたい場合（オプション）
+* concurrency で同時実行をキャンセル：concurrency:
+*   group: deploy-blog
+*   cancel-in-progress: true
+* 
+* 右カラムの JSON 取得側は ?t=${Date.now()} で毎回キャッシュバスト（既に対応済みならOK）。
+
+これで “一発で出ない” ケースがほぼ潰せます。また何かあれば遠慮なくどうぞ！次のチャット（①まとめ記事、②ブロックチェーン続き）も楽しみにしてます 🙌

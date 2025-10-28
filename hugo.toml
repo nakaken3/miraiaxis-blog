@@ -32,4 +32,8 @@ enableRobotsTXT = true
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
+[markup.goldmark.parser]
+  attribute = true
+[markup.goldmark.renderer]
+  unsafe = true
 

@@ -1,0 +1,19 @@
+<!-- progressbar: フッター差し込み -->
+<div class="progressbar" id="progressbar"></div>
+<script src="{{ "js/progressbar.js" | relURL }}" defer></script>
+<script>
+  // 現在URLに合致するメニューに .is-active を自動付与（簡易版）
+  (function(){
+    var links = document.querySelectorAll('.site-topbar .nav-tabs a, .menu a');
+    var here  = location.pathname.replace(/\/index\.html?$/, '/');
+    links.forEach(function(a){
+      var href = a.getAttribute('href') || "";
+      // 絶対/相対混在をざっくり吸収
+      if (href && (here === href || here.startsWith(href))) {
+        a.classList.add('is-active');
+      }
+    });
+  })();
+</script>
+
+

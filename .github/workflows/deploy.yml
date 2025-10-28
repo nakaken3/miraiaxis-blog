@@ -19,7 +19,9 @@ jobs:
           extended: true
 
       - name: Build site
-        run: hugo --gc --minify
+        run: |
+          hugo env
+          hugo --gc --minify --cleanDestinationDir --baseURL "https://miraiaxis.com/blog/"
 
       # 先に疎通テスト（原因切り分け）
       - name: Debug connectivity to Xserver FTPS
@@ -56,3 +58,16 @@ jobs:
           ls -la
           bye
           EOF
+
+      - name: Show config
+        run: hugo config | sed -n '1,120p'
+
+      - name: Sanity check build
+        run: |
+          test -s public/index.html
+          # 直近のコミットで content/posts/ を触っていたら、index.json に /blog/posts/ があるか軽く確認
+          if git diff --name-only HEAD~1..HEAD | grep -q '^content/posts/'; then
+            if ! grep -q '"/blog/posts/' public/index.json; then
+              echo "::warning ::No posts found in index.json (draft:true か 未来日付の可能性)"
+            fi
+          fi
