@@ -19,18 +19,16 @@ categories: ["開発ノート"]
 Hugo の記事はすべて `content/` フォルダ内に保存します。  
 一般的な構造は次のようになります。
 
-<div class="code-box">
-
+```text
 miraiaxis-blog/
-├── content/
-│ ├── posts/
-│ │ ├── blog-01/
-│ │ │ └── index.md ← 前回の記事
-│ │ ├── blog-02/
-│ │ │ └── index.md ← 今回の記事
-│ ├── \_index.md ← トップページ（任意）
-
-</div>
+ ├── content/
+ │   ├── posts/
+ │   │   ├── blog-01/
+ │   │   │   └── index.md   ← 前回の記事
+ │   │   ├── blog-02/
+ │   │   │   └── index.md   ← 今回の記事
+ │   └── _index.md           ← トップページ（任意）
+```
 
 各記事フォルダには `index.md` を置くのがポイントです。  
 画像を添える場合は、同じフォルダに配置することで相対パスで呼び出せます。
@@ -56,7 +54,7 @@ hugo new posts/blog-02/index.md
 
 ファイルを開くと次のようなヘッダー部分があります。
 
-## <div class="code-box">
+```text
 
 title: "Hugo 記事の作成・反映手順をまとめてみた"
 date: 2025-11-01
@@ -67,7 +65,7 @@ categories: ["開発ノート"]
 
 ---
 
-</div>
+```
 
 draft: true → 下書き状態（公開しない）
 
@@ -79,9 +77,9 @@ draft: false に変更すると公開対象になります
 
 コマンド一発でプレビューサーバが立ち上がります。
 
-<div class="code-box">
+```text
 hugo server -D --ignoreCache -b http://localhost:1313/blog/
-</div>
+```
 
 ブラウザで http://localhost:1313/blog/
 を開くと、
@@ -91,12 +89,12 @@ hugo server -D --ignoreCache -b http://localhost:1313/blog/
 
 記事が完成したら、Git でリポジトリに反映します。
 
-<div class="code-box">
+```text
 git add content/posts/blog-02/index.md
 git commit -m "post: add blog-02 Hugo記事作成手順"
 git push origin main
 
-</div>
+```
 
 push すると自動的に GitHub Actions が動き、
 Hugo がビルド → Xserver へ FTP アップロード → サイトに反映 されます。
@@ -107,7 +105,9 @@ https://miraiaxis.com/blog/ を開いてリロード（Shift ＋再読込）で�
 🧭 まとめ
 
 1️⃣ hugo new posts/blog-xx/index.md で記事を作る
+
 2️⃣ hugo server -D で確認する
+
 3️⃣ git add → commit → push で本番へ反映
 
 これだけでブログ更新が完結します。
@@ -136,7 +136,3 @@ Mirai Axis Blog
 これで完璧です。
 
 次回「デザインのカスタマイズ方法」では、実際に一覧カード・見出し装飾・色のバランス調整などを、あなたの現在の CSS に合わせて提案しますね。
-
-```
-
-```
