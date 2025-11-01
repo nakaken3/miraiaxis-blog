@@ -99,6 +99,10 @@ git push origin main
 push すると自動的に GitHub Actions が動き、
 Hugo がビルド → Xserver へ FTP アップロード → サイトに反映 されます。
 
+<figure>
+  <img src="sub01.jpg" alt="githubでaction実行中" width="720">
+</figure>
+
 ✅ 成功確認は GitHub の Actions タブ または
 https://miraiaxis.com/blog/ を開いてリロード（Shift ＋再読込）です。
 
