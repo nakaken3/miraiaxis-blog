@@ -45,6 +45,8 @@ Hugo には新しい記事を自動生成するコマンドがあります。
 
 ```bash
 hugo new posts/blog-02/index.md
+```
+
 </div>
 
 これで content/posts/blog-02/index.md が作成され、
@@ -54,15 +56,17 @@ hugo new posts/blog-02/index.md
 
 ファイルを開くと次のようなヘッダー部分があります。
 
-<div class="code-box">
----
+## <div class="code-box">
+
 title: "Hugo 記事の作成・反映手順をまとめてみた"
 date: 2025-11-01
 draft: true
-summary: "Hugoでの記事作成から反映までの流れを紹介します。"
+summary: "Hugo での記事作成から反映までの流れを紹介します。"
 tags: ["Hugo", "ブログ構築"]
 categories: ["開発ノート"]
+
 ---
+
 </div>
 
 draft: true → 下書き状態（公開しない）
@@ -80,12 +84,12 @@ hugo server -D --ignoreCache -b http://localhost:1313/blog/
 </div>
 
 ブラウザで http://localhost:1313/blog/
- を開くと、
+を開くと、
 リアルタイムで更新が確認できます。
 
-🚀 GitHubへ反映して公開
+🚀 GitHub へ反映して公開
 
-記事が完成したら、Gitでリポジトリに反映します。
+記事が完成したら、Git でリポジトリに反映します。
 
 <div class="code-box">
 git add content/posts/blog-02/index.md
@@ -95,10 +99,10 @@ git push origin main
 </div>
 
 push すると自動的に GitHub Actions が動き、
-Hugoがビルド → Xserver へFTPアップロード → サイトに反映 されます。
+Hugo がビルド → Xserver へ FTP アップロード → サイトに反映 されます。
 
 ✅ 成功確認は GitHub の Actions タブ または
-https://miraiaxis.com/blog/ を開いてリロード（Shift＋再読込）です。
+https://miraiaxis.com/blog/ を開いてリロード（Shift ＋再読込）です。
 
 🧭 まとめ
 
@@ -120,10 +124,10 @@ Mirai Axis Blog
 
 技術・運用ノートを、実験しながら丁寧に記録していきます。
 
-
 ---
 
 ✅ 使い方
+
 1. 上の内容をそのままコピー
 2. `content/posts/blog-02/index.md` に貼り付け
 3. `hugo server -D` で確認
@@ -131,5 +135,8 @@ Mirai Axis Blog
 
 これで完璧です。
 
-次回「デザインのカスタマイズ方法」では、実際に一覧カード・見出し装飾・色のバランス調整などを、あなたの現在のCSSに合わせて提案しますね。
+次回「デザインのカスタマイズ方法」では、実際に一覧カード・見出し装飾・色のバランス調整などを、あなたの現在の CSS に合わせて提案しますね。
+
+```
+
 ```
