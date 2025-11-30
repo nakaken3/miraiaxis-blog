@@ -18,10 +18,15 @@ jobs:
           hugo-version: "latest"
           extended: true
 
-      - name: Build site
+      - name: Build site (prod baseURL)
+        env:
+          HUGO_ENV: production
         run: |
-          hugo env
-          hugo --gc --minify --cleanDestinationDir --baseURL "https://miraiaxis.com/blog/"
+          rm -rf public
+          echo "HUGO_* envs:"; env | grep -E '^HUGO_|^BASEURL' || true
+          hugo --gc --minify --cleanDestinationDir \
+              --environment production \
+              --baseURL "https://miraiaxis.com/blog/"
 
       # 先に疎通テスト（原因切り分け）
       - name: Debug connectivity to Xserver FTPS
@@ -71,3 +76,14 @@ jobs:
               echo "::warning ::No posts found in index.json (draft:true か 未来日付の可能性)"
             fi
           fi
+
+      - name: Sanity check (no localhost) # ← デプロイより前に！
+        run: |
+          if grep -R "http://localhost:1313" -n public; then
+            echo "ERROR: localhost found in build output." >&2
+            exit 1
+          fi
+
+      - name: Print hugo env
+        run: |
+          echo "HUGO_* envs:"; env | grep -E '^HUGO_|^BASEURL' || true
