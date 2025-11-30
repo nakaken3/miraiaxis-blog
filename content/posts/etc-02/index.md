@@ -180,7 +180,7 @@ categories: ["Linux"]
 
     まず rufus の公式サイトへ Go
 
-    [Linux Mint のダウンロードサイト](https://rufus.ie/ja/)
+    <a href="https://rufus.ie/ja/" target="_blank">rufus の公式サイト</a>
 
     rufus 公式で検索すると、偽サイトがたくさん出て来ますのでご注意を。
 
