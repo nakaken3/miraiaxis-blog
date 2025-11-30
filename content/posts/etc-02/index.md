@@ -58,11 +58,11 @@ categories: ["Linux"]
 
 - **Linux をベースにする:** 強固なセキュリティを誇る Linux をインストール
 - **Linux 上で仮想化します:** 仮想化を利用し Linux の上に Windows10 マシンの内容を移す
-- **アップグレードします:** 全て安全に移行できていることを確認して Winsows11 にアップグレード
+- **アップグレードします:** 全て安全に移行できていることを確認して Windows11 にアップグレード
 
 たったこれだけです。
 
-しかも、Linux 上の Winsows が万が一ランサムウエアに感染しても、昨日の状態に直ぐに戻せるので実質被害は発生しません。
+しかも、Linux 上の Windows が万が一ランサムウエアに感染しても、昨日の状態に直ぐに戻せるので実質被害は発生しません。
 
 果たして効果があるのかわからないランサムウエア対策に莫大なお金を使う必要なく、万全の対策を講じることができます。
 
@@ -76,19 +76,19 @@ categories: ["Linux"]
 
 ---
 
-## 🛠️ 手順１　 WInsows10 マシンの内容全て　＞ VHD ファイルに
+## 🛠️ 手順１　 WIndows10 マシンの内容全て　＞ VHD ファイルに
 
 まず今使っている Windows10 マシンの内容を全て移行するためにバックアップをとりましょう。
 
 1.  **Disk2Vhd をダウンロードする:**
 
-    [マイクロソフトのサイト](https://learn.microsoft.com/ja-jp/sysinternals/downloads/disk2vhd) から Disk2vhd をダウンロードします。
+    <a href="https://learn.microsoft.com/ja-jp/sysinternals/downloads/disk2vhd" target="_blank">マイクロソフトのサイト</a>から Disk2vhd をダウンロードします。
 
     ![alt text](image.png)
 
 2.  **Disk2Vhd を使う:**
 
-    ダウンロードしてきた Disk2vhd.zip を解凍すると、その中に「disk2vhd64.exe」という名前のファイルがあります。（あなたの Winsows が 64 ビットという前提です）
+    ダウンロードしてきた Disk2vhd.zip を解凍すると、その中に「disk2vhd64.exe」という名前のファイルがあります。（あなたの Windows が 64 ビットという前提です）
 
     disk2vhd64.exe を右クリックして「管理者として実行」でプログラムを起動します。
 
@@ -156,7 +156,7 @@ categories: ["Linux"]
 
     このページに移動し
 
-    [Linux Mint のダウンロードサイト](https://www.linuxmint.com/download.php)
+    <a href="https://www.linuxmint.com/download.php" target="_blank">Linux Mint のダウンロードサイト</a>
 
     ![alt text](image-2.png)
 
