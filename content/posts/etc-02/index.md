@@ -2,7 +2,7 @@
 title: "Windows10マシンは捨てちゃダメ！華麗にWindows11マシンに変身させる裏技（前編）"
 date: 2025-11-29T08:10:05+09:00
 draft: false
-summary: "サポートが切れるWindows10マシンを、低コストで華麗に復活させWindows11マシンに変身させる裏技（前編）"
+summary: "サポートが切れるWindows10マシンを、華麗にWindows11マシンに変身させる裏技（前編）"
 tags:
   [
     "Linux",
