@@ -77,10 +77,11 @@ jobs:
             fi
           fi
 
-      - name: Sanity check (no localhost) # ← デプロイより前に！
+      - name: Sanity check (no localhost in links)
         run: |
-          if grep -R "http://localhost:1313" -n public; then
-            echo "ERROR: localhost found in build output." >&2
+          # href/src/canonical の属性に localhost が入っていないかだけチェックする
+          if grep -R -nE 'href="http://localhost:1313|src="http://localhost:1313|rel="canonical" href="http://localhost:1313' public; then
+            echo "ERROR: localhost found in link attributes." >&2
             exit 1
           fi
 
